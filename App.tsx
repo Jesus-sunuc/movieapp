@@ -11,20 +11,16 @@ function App(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  const safePadding = '5%';
-
   return (
     <View style={backgroundStyle}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <ScrollView style={backgroundStyle}>
-          <Header />
-          <View>
-            <Home />
-          </View>
-
+      <ScrollView contentInsetAdjustmentBehavior="automatic">
+        <View>
+          <Home />
+        </View>
       </ScrollView>
     </View>
   );
