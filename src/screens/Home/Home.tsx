@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {
   Dimensions,
+  Modal,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -20,7 +21,7 @@ const width = Dimensions.get('window').width;
 const Home = () => {
   const ref = React.useRef<ICarouselInstance>(null);
   const progress = useSharedValue<number>(0);
-
+  const [showDetailModal, setShowDetailModal] = useState(false);
   const [topImages, setTopImages] = useState<any>([]);
 
   useEffect(() => {
@@ -40,6 +41,12 @@ const Home = () => {
     });
   };
 
+  const openDetailModal = () => {
+    setShowDetailModal(true);
+  };
+  const closeDetailModal = () => {
+    setShowDetailModal(false);
+  };
   return (
     <View>
       <View style={styles.carouselSection}>
@@ -65,33 +72,103 @@ const Home = () => {
             </View>
           )}
         />
-      <View style={styles.overlayContainer}>
-        <View style={styles.titleSection}>
-          <Text style={styles.textDesc}>My List</Text>
-          <Text style={styles.textDesc}>Discover</Text>
+        <View style={styles.overlayContainer}>
+          <View style={styles.titleSection}>
+            <Text style={styles.textDesc}>My List</Text>
+            <Text style={styles.textDesc}>Discover</Text>
+          </View>
+          <View style={styles.buttonSection}>
+            <TouchableOpacity style={styles.buttonWishList}>
+              <Text style={styles.textWishList}>+ WishList</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttonDetail}
+              onPress={openDetailModal}>
+              <Text style={styles.textDetails}>Details</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.buttonSection}>
-          <TouchableOpacity style={styles.buttonWishList}>
-            <Text style={styles.textWishList}>+ WishList</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonDetail}>
-            <Text style={styles.textDetails}>Details</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
       </View>
       <Pagination.Basic
         progress={progress}
         data={topImages}
-        dotStyle={{backgroundColor: 'rgba(255, 255, 255, 0.7)', borderRadius: 50}}
+        dotStyle={{
+          backgroundColor: 'rgba(255, 255, 255, 0.7)',
+          borderRadius: 50,
+        }}
         containerStyle={{gap: 5, marginTop: 20}}
         onPress={onPressPagination}
       />
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showDetailModal}
+        onRequestClose={closeDetailModal}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalTitle}>Movie Details</Text>
+            <Text style={styles.modalText}>
+              Movie description will go here...
+            </Text>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={closeDetailModal}>
+              <Text style={styles.closeButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalView: {
+    width: '90%',
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+    fontSize: 16,
+  },
+  closeButton: {
+    backgroundColor: '#F2C94C',
+    borderRadius: 13,
+    padding: 10,
+    elevation: 2,
+    marginTop: 10,
+    paddingHorizontal: 30,
+  },
+  closeButtonText: {
+    color: 'black',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 16,
+  },
   scrollViewContainer: {
     backgroundColor: '#000000',
   },
