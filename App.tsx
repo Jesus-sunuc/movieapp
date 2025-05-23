@@ -1,7 +1,7 @@
 import React from 'react';
-import {ScrollView, StatusBar, useColorScheme, View} from 'react-native';
+import { useColorScheme, View} from 'react-native';
 
-import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Home from './src/screens/Home/Home';
 
 function App(): React.JSX.Element {
@@ -13,15 +13,9 @@ function App(): React.JSX.Element {
 
   return (
     <View style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <View>
-          <Home />
-        </View>
-      </ScrollView>
+      <View>
+        <Home />
+      </View>
     </View>
   );
 }
