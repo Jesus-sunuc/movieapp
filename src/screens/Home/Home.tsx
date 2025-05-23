@@ -15,6 +15,7 @@ import Carousel, {
 import React from 'react';
 import {useSharedValue} from 'react-native-reanimated';
 import {Image} from 'react-native';
+import SubHeader from '../../components/core/SubHeader';
 
 const width = Dimensions.get('window').width;
 
@@ -47,6 +48,11 @@ const Home = () => {
   const closeDetailModal = () => {
     setShowDetailModal(false);
   };
+
+  const redirectSeeMore = () => {
+    console.log('See more');
+  };
+
   return (
     <View>
       <View style={styles.carouselSection}>
@@ -99,9 +105,11 @@ const Home = () => {
         containerStyle={{gap: 5, marginTop: 20}}
         onPress={onPressPagination}
       />
-      <ModalDetail 
-        visible={showDetailModal}
-        onClose={closeDetailModal}
+      <ModalDetail visible={showDetailModal} onClose={closeDetailModal} />
+      <SubHeader
+        title="Marvel Studios"
+        titleNav="See more"
+        handleNav={redirectSeeMore}
       />
     </View>
   );
