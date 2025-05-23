@@ -16,6 +16,7 @@ import React from 'react';
 import {useSharedValue} from 'react-native-reanimated';
 import {Image} from 'react-native';
 import SubHeader from '../../components/core/SubHeader';
+import ListMovies from '../../components/core/ListMovies';
 
 const width = Dimensions.get('window').width;
 
@@ -31,7 +32,6 @@ const Home = () => {
         posterPath: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
       }));
       setTopImages(movies);
-      console.log(movies);
     });
   }, []);
 
@@ -60,7 +60,7 @@ const Home = () => {
           ref={ref}
           width={width}
           height={width * 1.5}
-          data={topImages}
+          data={topImages.slice(0, 5)}
           autoPlay={true}
           autoPlayInterval={3000}
           onProgressChange={progress}
@@ -97,20 +97,22 @@ const Home = () => {
       </View>
       <Pagination.Basic
         progress={progress}
-        data={topImages}
+        data={topImages.slice(0, 5)}
         dotStyle={{
-          backgroundColor: 'rgba(255, 255, 255, 0.7)',
+          backgroundColor: '#fff',
           borderRadius: 50,
         }}
-        containerStyle={{gap: 5, marginTop: 20}}
+        activeDotStyle={{backgroundColor: '#f2c94c'}}
+        containerStyle={{gap: 6, marginTop: 25}}
         onPress={onPressPagination}
       />
       <ModalDetail visible={showDetailModal} onClose={closeDetailModal} />
       <SubHeader
-        title="Marvel Studios"
+        title="Rated Movies"
         titleNav="See more"
         handleNav={redirectSeeMore}
       />
+      <ListMovies />
     </View>
   );
 };

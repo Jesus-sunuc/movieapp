@@ -19,3 +19,22 @@ export const getPopularMovies = async () => {
     console.error('Error API:', error);
   }
 };
+
+export const getRatedMoviesf = async () => {
+  try {
+    const response = await axios.get(`${TMDB_BASE_URL}/movie/top_rated`, {
+      headers: {
+        Authorization: `Bearer ${TMDB_ACCESS_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      params: {
+        language: 'en-US',
+        page: 1,
+      },
+    });
+
+    return response.data.results;
+  } catch (error) {
+    console.error('Error API:', error);
+  }
+};
