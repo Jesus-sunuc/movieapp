@@ -1,23 +1,23 @@
 import {useEffect, useState} from 'react';
 import {Dimensions, Image, StyleSheet, View} from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
-import {getPopularMovies} from '../../utils/services/TMDBService';
+import {getPopularMovies, getRatedMovies} from '../../utils/services/TMDBService';
 import {useSharedValue} from 'react-native-reanimated';
 
 const width = Dimensions.get('window').width;
 
-const ListMovies = () => {
+const ListMovies = ({callbackFn} : any) => {
   const [ratedImages, setRatedImages] = useState<any>([]);
   const progress = useSharedValue<number>(0);
 
   useEffect(() => {
-    getPopularMovies().then((response: any) => {
+    callbackFn().then((response: any) => {
       const movies = response.map((item: any) => ({
         posterPath: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
       }));
       setRatedImages(movies);
     });
-  }, []);
+  }, [callbackFn]);
 
   return (
     <View>

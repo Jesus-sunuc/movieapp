@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {getPopularMovies} from '../../utils/services/TMDBService';
+import {getPopularMovies, getRatedMovies, getUpcomingMovies} from '../../utils/services/TMDBService';
 import ModalDetail from '../../components/modal/modalDetail';
 import Carousel, {
   ICarouselInstance,
@@ -17,6 +17,7 @@ import {useSharedValue} from 'react-native-reanimated';
 import {Image} from 'react-native';
 import SubHeader from '../../components/core/SubHeader';
 import ListMovies from '../../components/core/ListMovies';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const width = Dimensions.get('window').width;
 
@@ -54,73 +55,79 @@ const Home = () => {
   };
 
   return (
-    <View>
-      <View style={styles.carouselSection}>
-        <Carousel
-          ref={ref}
-          width={width}
-          height={width * 1.5}
-          data={topImages.slice(0, 5)}
-          autoPlay={true}
-          autoPlayInterval={3000}
-          onProgressChange={progress}
-          renderItem={({index}) => (
-            <View
-              style={{
-                flex: 1,
-                borderWidth: 1,
-                justifyContent: 'center',
-              }}>
-              <Image
-                source={{uri: topImages[index].posterPath}}
-                style={styles.image}
-              />
+    <ScrollView>
+      <View>
+        <View style={styles.carouselSection}>
+          <Carousel
+            ref={ref}
+            width={width}
+            height={width * 1.5}
+            data={topImages.slice(0, 5)}
+            autoPlay={true}
+            autoPlayInterval={3000}
+            onProgressChange={progress}
+            renderItem={({index}) => (
+              <View
+                style={{
+                  flex: 1,
+                  borderWidth: 1,
+                  justifyContent: 'center',
+                }}>
+                <Image
+                  source={{uri: topImages[index].posterPath}}
+                  style={styles.image}
+                />
+              </View>
+            )}
+          />
+          <View style={styles.overlayContainer}>
+            <View style={styles.titleSection}>
+              <Text style={styles.textDesc}>My List</Text>
+              <Text style={styles.textDesc}>Discover</Text>
             </View>
-          )}
-        />
-        <View style={styles.overlayContainer}>
-          <View style={styles.titleSection}>
-            <Text style={styles.textDesc}>My List</Text>
-            <Text style={styles.textDesc}>Discover</Text>
-          </View>
-          <View style={styles.buttonSection}>
-            <TouchableOpacity style={styles.buttonWishList}>
-              <Text style={styles.textWishList}>+ WishList</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.buttonDetail}
-              onPress={openDetailModal}>
-              <Text style={styles.textDetails}>Details</Text>
-            </TouchableOpacity>
+            <View style={styles.buttonSection}>
+              <TouchableOpacity style={styles.buttonWishList}>
+                <Text style={styles.textWishList}>+ WishList</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.buttonDetail}
+                onPress={openDetailModal}>
+                <Text style={styles.textDetails}>Details</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
+        <Pagination.Basic
+          progress={progress}
+          data={topImages.slice(0, 5)}
+          dotStyle={{
+            backgroundColor: '#fff',
+            borderRadius: 50,
+          }}
+          activeDotStyle={{backgroundColor: '#f2c94c'}}
+          containerStyle={{gap: 6, marginTop: 25}}
+          onPress={onPressPagination}
+        />
+        <ModalDetail visible={showDetailModal} onClose={closeDetailModal} />
+        <SubHeader
+          title="Rated Movies"
+          titleNav="See more"
+          handleNav={redirectSeeMore}
+        />
+        <ListMovies callbackFn={getRatedMovies}/>
+        <SubHeader
+          title="Upcoming Movies"
+          titleNav="See more"
+          handleNav={redirectSeeMore}
+        />
+        <ListMovies callbackFn={getUpcomingMovies}/>
       </View>
-      <Pagination.Basic
-        progress={progress}
-        data={topImages.slice(0, 5)}
-        dotStyle={{
-          backgroundColor: '#fff',
-          borderRadius: 50,
-        }}
-        activeDotStyle={{backgroundColor: '#f2c94c'}}
-        containerStyle={{gap: 6, marginTop: 25}}
-        onPress={onPressPagination}
-      />
-      <ModalDetail visible={showDetailModal} onClose={closeDetailModal} />
-      <SubHeader
-        title="Rated Movies"
-        titleNav="See more"
-        handleNav={redirectSeeMore}
-      />
-      <ListMovies />
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollViewContainer: {
-    backgroundColor: '#000000',
-  },
+
   carouselContainer: {
     flex: 1,
     backgroundColor: '#000000',
