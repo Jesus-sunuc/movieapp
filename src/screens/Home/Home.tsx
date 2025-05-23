@@ -108,7 +108,7 @@ const Home = () => {
           <View style={styles.modalView}>
             <Text style={styles.modalTitle}>Movie Details</Text>
             <Text style={styles.modalText}>
-              Movie description will go here...
+              Movie description goes here. This is a placeholder text to show the
             </Text>
             <TouchableOpacity
               style={styles.closeButton}
