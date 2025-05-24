@@ -4,7 +4,7 @@ import {Text} from 'react-native-gesture-handler';
 const Search = () => {
   return (
     <View>
-      <Text style={{fontSize: 20, textAlign: 'center', marginTop: 20}}>
+      <Text style={{fontSize: 20, textAlign: 'center', marginTop: 50, color: '#fff'}}>
         Search Screen
       </Text>
     </View>
