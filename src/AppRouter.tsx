@@ -10,7 +10,7 @@ import {useTheme} from './utils/theme/ThemeContext';
 import {darkTheme, lightTheme} from './utils/theme/theme';
 import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
 import {createStackNavigator} from '@react-navigation/stack';
-import SeeMore from './screens/SeeMore';
+import SeeMore from './components/core/SeeMore';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();

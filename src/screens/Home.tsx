@@ -56,8 +56,8 @@ const Home = () => {
     setShowDetailModal(false);
   };
 
-  const redirectSeeMore = () => {
-    navigation.navigate('SeeMore');
+  const redirectSeeMore = (callbackFn: any) => {
+    navigation.navigate('SeeMore', {callbackFn});
   };
 
   return (
@@ -118,13 +118,13 @@ const Home = () => {
         <SubHeader
           title="Rated Movies"
           titleNav="See more"
-          handleNav={redirectSeeMore}
+          handleNav={() => redirectSeeMore(getRatedMovies)}
         />
         <ListMovies callbackFn={getRatedMovies} />
         <SubHeader
           title="Upcoming Movies"
           titleNav="See more"
-          handleNav={redirectSeeMore}
+          handleNav={() => redirectSeeMore(getUpcomingMovies)}
         />
         <ListMovies callbackFn={getUpcomingMovies} />
       </View>
