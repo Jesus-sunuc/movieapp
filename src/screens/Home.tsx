@@ -6,7 +6,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {getPopularMovies, getRatedMovies, getUpcomingMovies} from '../utils/services/TMDBService';
+import {
+  getPopularMovies,
+  getRatedMovies,
+  getUpcomingMovies,
+} from '../utils/services/TMDBService';
 import ModalDetail from '../components/modal/modalDetail';
 import Carousel, {
   ICarouselInstance,
@@ -18,6 +22,7 @@ import {Image} from 'react-native';
 import SubHeader from '../components/core/SubHeader';
 import ListMovies from '../components/core/ListMovies';
 import {ScrollView} from 'react-native-gesture-handler';
+import {useNavigation} from '@react-navigation/native';
 
 const width = Dimensions.get('window').width;
 
@@ -26,6 +31,7 @@ const Home = () => {
   const progress = useSharedValue<number>(0);
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [topImages, setTopImages] = useState<any>([]);
+  const navigation = useNavigation<any>();
 
   useEffect(() => {
     getPopularMovies().then((response: any) => {
@@ -51,7 +57,7 @@ const Home = () => {
   };
 
   const redirectSeeMore = () => {
-    console.log('See more');
+    navigation.navigate('SeeMore');
   };
 
   return (
@@ -114,20 +120,19 @@ const Home = () => {
           titleNav="See more"
           handleNav={redirectSeeMore}
         />
-        <ListMovies callbackFn={getRatedMovies}/>
+        <ListMovies callbackFn={getRatedMovies} />
         <SubHeader
           title="Upcoming Movies"
           titleNav="See more"
           handleNav={redirectSeeMore}
         />
-        <ListMovies callbackFn={getUpcomingMovies}/>
+        <ListMovies callbackFn={getUpcomingMovies} />
       </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-
   carouselContainer: {
     flex: 1,
     backgroundColor: '#000000',
