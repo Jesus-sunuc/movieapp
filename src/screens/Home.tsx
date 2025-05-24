@@ -6,8 +6,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {getPopularMovies, getRatedMovies, getUpcomingMovies} from '../../utils/services/TMDBService';
-import ModalDetail from '../../components/modal/modalDetail';
+import {getPopularMovies, getRatedMovies, getUpcomingMovies} from '../utils/services/TMDBService';
+import ModalDetail from '../components/modal/modalDetail';
 import Carousel, {
   ICarouselInstance,
   Pagination,
@@ -15,8 +15,8 @@ import Carousel, {
 import React from 'react';
 import {useSharedValue} from 'react-native-reanimated';
 import {Image} from 'react-native';
-import SubHeader from '../../components/core/SubHeader';
-import ListMovies from '../../components/core/ListMovies';
+import SubHeader from '../components/core/SubHeader';
+import ListMovies from '../components/core/ListMovies';
 import {ScrollView} from 'react-native-gesture-handler';
 
 const width = Dimensions.get('window').width;
