@@ -6,16 +6,38 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Search from './src/screens/Search';
 import WishList from './src/screens/WishList';
 import Profile from './src/screens/Profile';
+import {ThemeProvider, useTheme} from './src/utils/theme/ThemeContext';
+import {darkTheme, lightTheme} from './src/utils/theme/theme';
 
 const Tab = createBottomTabNavigator();
 
-function App(): React.JSX.Element {
+function AppContent(): React.JSX.Element {
+  const {isDarkMode} = useTheme();
+  const theme = isDarkMode ? darkTheme : lightTheme;
+
   return (
-    <GestureHandlerRootView style={{flex: 1}}>
-      <NavigationContainer>
+    <GestureHandlerRootView style={{flex: 1, backgroundColor: theme.colors.background}}>
+      <NavigationContainer theme={{
+        colors: {
+          ...theme.colors,
+          primary: theme.colors.primary,
+          background: theme.colors.background,
+          card: theme.colors.card,
+          text: theme.colors.text,
+          border: theme.colors.border,
+        },
+        dark: isDarkMode,
+        fonts: theme.fonts,
+      }}>
         <Tab.Navigator
           screenOptions={{
             headerShown: false,
+            tabBarStyle: {
+              backgroundColor: theme.colors.tabBar,
+              borderTopWidth: 0,
+            },
+            tabBarActiveTintColor: theme.colors.primary,
+            tabBarInactiveTintColor: theme.colors.tabBarInactive,
           }}>
           <Tab.Screen 
             name="Home" 
@@ -36,6 +58,14 @@ function App(): React.JSX.Element {
         </Tab.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
+  );
+}
+
+function App(): React.JSX.Element {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 
